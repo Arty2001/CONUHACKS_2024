@@ -1,0 +1,3 @@
+backend/venv/
+backend/blueprints/__pycache__
+backend/mongo_utils/__pycache__
