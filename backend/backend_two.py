@@ -159,17 +159,11 @@ def long_term_investement(goal, after_tax_income, expenses):
     current = 0
     years = 0
     while (current<goal):
-        current = available_money*2
-        #1.1026
+        current = (current+available_money)*1.1026
         years += 1  
-        print("stuck")
-
-
-    years += 1
+    
     goal_with_inflation = inflation_per_year(goal, years)
     result = [years, goal_with_inflation]
-    print(result[0])
-    print(result[1])
     return(result)
 
 
@@ -177,8 +171,7 @@ def long_term_investement(goal, after_tax_income, expenses):
 #compute_taxes(100000)
 
 #long_term_investement(100, 100, 30)
-print(inflation_per_year(100000, 2))
-print("wedwed")
+long_term_investement(100000, 70000, 50000)
 
 
 

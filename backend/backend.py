@@ -87,67 +87,42 @@ def compute_taxes(income):
         federalDeductableIncome=income*0.15
     elif income > 53359 and income <= 106717:
         federalDeductableIncome=53359*0.15
-        income=income-53359
-        federalDeductableIncome=federalDeductableIncome+income*0.205
+        federalDeductableIncome=federalDeductableIncome+(income-53359)*0.205
     elif income > 106717 and income <= 165430:
         federalDeductableIncome=53359*0.15
         federalDeductableIncome=federalDeductableIncome+(106717-53359)*0.205
-        federalDeductableIncome=income*0.26
+        federalDeductableIncome=federalDeductableIncome+(income-106717)*0.26
     elif income > 165430 and income <= 235675:
-        federalDeductableIncome=income*0.29
+        federalDeductableIncome=53359*0.15
+        federalDeductableIncome=federalDeductableIncome+(106717-53359)*0.205
+        federalDeductableIncome=federalDeductableIncome+(165430-106717)*0.26
+        federalDeductableIncome=federalDeductableIncome+(income-165430)*0.29
     elif income > 235675:
-        federalDeductableIncome=income*0.33
+        federalDeductableIncome=53359*0.15
+        federalDeductableIncome=federalDeductableIncome+(106717-53359)*0.205
+        federalDeductableIncome=federalDeductableIncome+(165430-106717)*0.26
+        federalDeductableIncome=federalDeductableIncome+(235675-165430)*0.29
+        federalDeductableIncome=federalDeductableIncome+(income-235675)*0.33
+    
 
     if income <= 49275:
         provincialDeductableIncome=income*0.14
     elif income > 49275 and income <= 98540:
-        provincialDeductableIncome=income*0.19
+        provincialDeductableIncome=49275*0.14
+        provincialDeductableIncome=provincialDeductableIncome+(income-49275)*0.19
     elif income > 98540 and income <= 119910:
-        provincialDeductableIncome=income*0.24
-    else:
-        provincialDeductableIncome=income*0.2575
+        provincialDeductableIncome=49275*0.14
+        provincialDeductableIncome=provincialDeductableIncome+(98540-49275)*0.19
+        provincialDeductableIncome=provincialDeductableIncome+(income-98540)*0.24
+    elif income>119910:
+        provincialDeductableIncome=49275*0.14
+        provincialDeductableIncome=provincialDeductableIncome+(98540-49275)*0.19
+        provincialDeductableIncome=provincialDeductableIncome+(119910-98540)*0.24
+        provincialDeductableIncome=provincialDeductableIncome+(income-119910)*0.2575
        
 
     income=income-(federalDeductableIncome+provincialDeductableIncome)
-
     print(income)
-
-def calculate_after_tax_income(gross_income):
-    # Canadian Federal Tax Brackets and Rates
-    federal_tax = 0
-    federal_brackets = [(53359, 0.15), (106717, 0.205), (165430, 0.26), (235675, 0.29), (float('inf'), 0.33)]
-
-    previous_bracket_limit = 0
-    for limit, rate in federal_brackets:
-        if gross_income > limit:
-            federal_tax += (limit - previous_bracket_limit) * rate
-        else:
-            federal_tax += (gross_income - previous_bracket_limit) * rate
-            break
-        previous_bracket_limit = limit
-
-    # Quebec Provincial Tax Brackets and Rates
-    quebec_tax = 0
-    quebec_brackets = [(49275, 0.14), (98540, 0.19), (119910, 0.24), (float('inf'), 0.2575)]
-
-    previous_bracket_limit = 0
-    for limit, rate in quebec_brackets:
-        if gross_income > limit:
-            quebec_tax += (limit - previous_bracket_limit) * rate
-        else:
-            quebec_tax += (gross_income - previous_bracket_limit) * rate
-            break
-        previous_bracket_limit = limit
-
-    # Calculate total tax and after-tax income
-    total_tax = federal_tax + quebec_tax
-    after_tax_income = gross_income - total_tax
-
-    return after_tax_income
-
-
-
-
 
     
 def inflation_per_year(amount, years): #TODO: REVISIT THIS
@@ -161,15 +136,11 @@ def long_term_investement(goal, after_tax_income, expenses):
     current = 0
     years = 0
     while (current<goal):
-        current = available_money*1.1026
-        years += 1
-        print("here")
-
-    years += 1
+        current = (current+available_money)*1.1026
+        years += 1  
+    
     goal_with_inflation = inflation_per_year(goal, years)
     result = [years, goal_with_inflation]
-    print(result[0])
-    print(result[1])
     return(result)
 
 
