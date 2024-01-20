@@ -2,26 +2,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import QuestionPage from '../components/QuestionPage';
 import DebtsQuestionPage from '../components/debtsQuestionPage';
-import { Button, Checkbox, NativeSelect, NumberInput, TextInput } from '@mantine/core';
 import { IconCurrencyDollar } from '@tabler/icons-react';
-
-
+import InputAdornment from '@mui/material/InputAdornment';
+import { MenuItem, Select, TextField, Button, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, styled } from '@mui/system';
 
 function Home() {
   const [page, setPage] = useState<number>(0);
   const [name, setName] = useState('');
-  const [age, setAge] = useState<string|number>(18);
-  const [annualIncome, setAnnualIncome] = useState<string|number>(0);
-  const [houseValue, setHouseValue] = useState<string|number>(0)
+  const [age, setAge] = useState<any>(18);
+  const [annualIncome, setAnnualIncome] = useState<any>(0);
+  const [houseValue, setHouseValue] = useState<any>(0)
   const [financialGoal, setfinancialGoal] = useState('Get My Dream House');
   const [debts, setDebts] = useState<any>([])
   const [rentBoolean, setRentBoolean]= useState<boolean>(false)
-  const [rent, setRents] = useState<string|number>(0)
-  const [activities, setActivities] = useState<string|number>(0)
-  const [expenses, setExpenses ] = useState<string|number>(0)
-  const [FHSA , setFHSA] = useState<string|number>(0);
-  const [TFSA , setTFSA] = useState<string|number>(0);
-  const [RRSP , setRRSP] = useState<string|number>(0);
+  const [rent, setRent] = useState<any>(0)
+  const [activities, setActivities] = useState<any>(0)
+  const [expenses, setExpenses ] = useState<any>(0)
+  const [FHSA , setFHSA] = useState<any>(0);
+  const [TFSA , setTFSA] = useState<any>(0);
+  const [RRSP , setRRSP] = useState<any>(0);
 
   return (<>
     <div style={{display:'flex', flexDirection:'column', width: '100%', height: '100vh', justifyContent: 'center', alignItems:'center'}}>
@@ -33,39 +33,59 @@ function Home() {
       </div> }
       <div style={{width:"100%", height:500}}>
       {page ===1 && <div>
-        <TextInput
+        <TextField
           label={"Name"}
           value={name}
           onChange={(event) => setName(event.currentTarget.value)}
         />
-        <NumberInput
-          label={"Age"}
-          value={age}
-          onChange={(event) => setAge(event)}
+        <TextField
+          inputProps={{ type: 'number'}}
+          placeholder={"Age"}
+          defaultValue={age}
+          onChange={(event:any) => setAge(event.currentTarget.value)}
         />
-        <NumberInput 
-          leftSection={<IconCurrencyDollar style={{ width: 20, height: 20 }} stroke={1.5} />}
-          label="With left section" 
-          placeholder="With left section"
-          onChange={(event) => setAnnualIncome(event)}
+        <TextField 
+          inputProps={{ type: 'number'}}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconCurrencyDollar />
+              </InputAdornment>
+            ),
+          }}
+          defaultValue={annualIncome}
+          onChange={(event:any) => setAnnualIncome(event.currentTarget.value)}
          />
         <div style={{display:'flex', width:'100%', justifyContent:'flex-end'}}>
           <Button onClick={()=>{setPage((prev)=>{return prev+1})}}> Next</Button>
         </div>
      </div> }
       {page ===2 && <div>
-        <NativeSelect
-          label={"What are your financial goals? "}
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
           value={financialGoal}
-          data={['Get My Dream House', 'Pay off Debt', 'Retirement plan', 'Long-term Investment']}
-          onChange={(event) => setfinancialGoal(event.currentTarget.value)}
-        />
+          label="Financial Goal"
+          onChange={(event:any) => setfinancialGoal(event.target.value as string)}
+        >
+          <MenuItem value={'Get My Dream House'}>Get My Dream House</MenuItem>
+          <MenuItem value={'PD'}>Pay off Debt</MenuItem>
+          <MenuItem value={'RP'}>Retirement plan</MenuItem>
+          <MenuItem value={'LTI'}> Long-term Investment </MenuItem> 
+        </Select>
         {
           financialGoal === 'Get My Dream House' &&
-          <NumberInput 
-          leftSection={<IconCurrencyDollar style={{ width: 20, height: 20 }} stroke={1.5} />}
-          label="Current House Value" 
-          onChange={(event) => setHouseValue(event)}
+          <TextField 
+          inputProps={{ type: 'number'}}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconCurrencyDollar />
+              </InputAdornment>
+            ),
+          }}
+          defaultValue={houseValue}
+          onChange={(event:any) => setHouseValue(event.currentTarget.value)}
          />
         }
         <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
@@ -79,52 +99,87 @@ function Home() {
           <Button onClick={()=>{setPage((prev)=>{return prev+1})}}> Next</Button>
         </div></div> }
       {page ===4 && <div>
-        <Checkbox
+        <FormControlLabel label = "I pay rent" control={<Checkbox
           checked={rentBoolean}
-          label="I pay rent"
-          onChange={(event) => setRentBoolean(event.currentTarget.checked)}
+          onChange={(event: any) => setRentBoolean(event.target.checked)}/>}
         />
-        <NumberInput 
-          leftSection={<IconCurrencyDollar style={{ width: 20, height: 20 }} stroke={1.5} />}
-          label="Rent" 
-          value={rent}
+          <TextField 
+          inputProps={{ type: 'number'}}
           disabled={!rentBoolean}
-          onChange={(event) => setRents(event)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconCurrencyDollar />
+              </InputAdornment>
+            ),
+          }}
+          defaultValue={rent}
+          onChange={(event:any) => setRent(event.currentTarget.value)}
          />
-         <NumberInput 
-          leftSection={<IconCurrencyDollar style={{ width: 20, height: 20 }} stroke={1.5} />}
-          label="Leisure"
-          value={activities} 
-          onChange={(event) => setActivities(event)}
+         <TextField 
+          inputProps={{ type: 'number'}}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconCurrencyDollar />
+              </InputAdornment>
+            ),
+          }}
+          defaultValue={activities}
+          onChange={(event:any) => setActivities(event.currentTarget.value)}
          />
-         <NumberInput 
-          leftSection={<IconCurrencyDollar style={{ width: 20, height: 20 }} stroke={1.5} />}
-          label="Other Expenses"
-          value={expenses} 
-          onChange={(event) => setExpenses(event)}
+         <TextField 
+          inputProps={{ type: 'number'}}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconCurrencyDollar />
+              </InputAdornment>
+            ),
+          }}
+          defaultValue={expenses}
+          onChange={(event:any) => setExpenses(event.currentTarget.value)}
          />
         <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
           <Button onClick={()=>{setPage((prev)=>{return prev-1})}}> Previous </Button>
           <Button onClick={()=>{setPage((prev)=>{return prev+1})}}> Next</Button>
         </div></div> }
         {page ===5 && <div>
-         <NumberInput 
-          leftSection={<IconCurrencyDollar style={{ width: 20, height: 20 }} stroke={1.5} />}
-          label="FHSA"
-          value={FHSA} 
-          onChange={(event) => setFHSA(event)}
+          <TextField 
+          inputProps={{ type: 'number'}}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconCurrencyDollar />
+              </InputAdornment>
+            ),
+          }}
+          defaultValue={FHSA}
+          onChange={(event:any) => setFHSA(event.currentTarget.value)}
          />
-         <NumberInput 
-          leftSection={<IconCurrencyDollar style={{ width: 20, height: 20 }} stroke={1.5} />}
-          label="TFSA"
-          value={TFSA} 
-          onChange={(event) => setTFSA(event)}
+         <TextField 
+          inputProps={{ type: 'number'}}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconCurrencyDollar />
+              </InputAdornment>
+            ),
+          }}
+          defaultValue={TFSA}
+          onChange={(event:any) => setTFSA(event.currentTarget.value)}
          />
-         <NumberInput 
-          leftSection={<IconCurrencyDollar style={{ width: 20, height: 20 }} stroke={1.5} />}
-          label="RRSP"
-          value={RRSP} 
-          onChange={(event) => setRRSP(event)}
+         <TextField 
+          inputProps={{ type: 'number'}}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconCurrencyDollar />
+              </InputAdornment>
+            ),
+          }}
+          defaultValue={RRSP}
+          onChange={(event:any) => setRRSP(event.currentTarget.value)}
          />
         <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
           <Button onClick={()=>{setPage((prev)=>{return prev-1})}}> Previous </Button>

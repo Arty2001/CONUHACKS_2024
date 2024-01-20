@@ -22,6 +22,9 @@ function QuestionPage({page}: QuestionPageProps){
             <div style={{backgroundColor: page > 3 ? "green" : 'grey', flexGrow:1, margin: '0 5px', borderRadius: '10px', boxShadow: page === 4 ? '0 0 10px rgba(0, 255, 0, 0.5)' : 'none'}}>
             {/* <h2> Page 4 of 4</h2> */}
             </div>
+            <div style={{backgroundColor: page > 3 ? "green" : 'grey', flexGrow:1, margin: '0 5px', borderRadius: '10px', boxShadow: page === 4 ? '0 0 10px rgba(0, 255, 0, 0.5)' : 'none'}}>
+            {/* <h2> Page 4 of 4</h2> */}
+            </div>
         </div>
         </div>
     )
