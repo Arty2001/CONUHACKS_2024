@@ -1,35 +1,36 @@
+import { motion, AnimatePresence } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
+import QuestionPage from '../components/QuestionPage';
 
 function Home() {
-  const [data, setData] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/items');
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        setData(result);
-      } catch (error:any) {
-        setError(error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const [page, setPage] = useState<number>(1);
 
   return (
-    <div>
-      <h2>Home</h2>
-      {error ? (
-        <p>Error: {error}</p>
-      ) : (
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      )}
+    
+    <div style={{display:'flex', flexDirection:'column', width: '100%', height: '100vh', justifyContent: 'center', alignItems:'center'}}>
+      <QuestionPage page={page}/>
+      <AnimatePresence>
+      {page ===0 && <div>
+        <h2>Welcome to your financial journey! </h2>
+        <button> Starts</button>
+      </div> }
+      {page ===1 && <div>
+        <h2>Welcome to your financial journey!1 </h2>
+        <button> Starts</button>
+      </div> }
+      {page ===2 && <div>
+        <h2>Welcome to your financial journey!2 </h2>
+        <button> Starts</button>
+      </div> }
+      {page ===3 && <div>
+        <h2>Welcome to your financial journey!3 </h2>
+        <button> Starts</button>
+      </div> }
+      {page ===4 && <div>
+        <h2>Welcome to your financial journey!4 </h2>
+        <button> Starts</button>
+      </div> }
+      </AnimatePresence>
     </div>
   );
 }
