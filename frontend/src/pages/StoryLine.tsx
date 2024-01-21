@@ -1,5 +1,8 @@
 import React from "react";
 import "./StoryLine.css";
+import { LineChart } from "@mui/x-charts/LineChart";
+import Stack from '@mui/material/Stack';
+
 import {
   Group,
   Paper,
@@ -68,8 +71,8 @@ function StatsGrid() {
 }
 
 const stats = [
-  { value: 447, label: "Remaining" },
-  { value: 76, label: "In progress" },
+  { value: 447, label: "Total Debt" },
+  { value: 76, label: "Remaining Debt" },
 ];
 
 export function StatsRingCard() {
@@ -86,28 +89,21 @@ export function StatsRingCard() {
   ));
 
   return (
-    <Card withBorder p="xl" radius="md" className="card">
+    <Card withBorder p="sm" radius="md" className="card">
       <div className="inner">
         <div>
           <Text fz="xl" className="label">
-            Project tasks
+            Debt X
           </Text>
-          <div>
-            <Text className="label" mt={30}>
-              1887
-            </Text>
-            <Text fz="xs" c="dimmed">
-              Completed
-            </Text>
-          </div>
+          <div></div>
           <Group mt="lg">{items}</Group>
         </div>
 
         <div className="ring">
           <RingProgress
             roundCaps
-            thickness={6}
-            size={150}
+            thickness={4}
+            size={100}
             sections={[
               { value: (completed / total) * 100, color: theme.primaryColor },
             ]}
@@ -117,7 +113,7 @@ export function StatsRingCard() {
                   {((completed / total) * 100).toFixed(0)}%
                 </Text>
                 <Text ta="center" fz="xs" c="dimmed">
-                  Completed
+                  Payed off
                 </Text>
               </div>
             }
@@ -129,7 +125,7 @@ export function StatsRingCard() {
 }
 
 function MultipleStatsRingCards() {
-  const numberOfCards = 5; 
+  const numberOfCards = 5;
 
   return (
     <div>
@@ -140,15 +136,121 @@ function MultipleStatsRingCards() {
   );
 }
 
+export function AssetsCard() {
+  const theme = useMantineTheme();
+  const completed = 1887;
+  const total = 2334;
+  const items = stats.map((stat) => (
+    <div key={stat.label}>
+      <Text className="label">{stat.value}</Text>
+      <Text size="xs" c="dimmed">
+        {stat.label}
+      </Text>
+    </div>
+  ));
+
+  return (
+    <Card withBorder p="sm" radius="md" className="card">
+      <div className="inner">
+        <div>
+          <Text fz="sm" className="label">
+            House
+          </Text>
+          <div></div>
+          <Group mt="xs">{items}</Group>
+        </div>
+
+        <div className="ring">
+          <RingProgress
+            roundCaps
+            thickness={4}
+            size={100}
+            sections={[
+              { value: (completed / total) * 100, color: theme.primaryColor },
+            ]}
+            label={
+              <div>
+                <Text ta="center" fz="lg" className="label">
+                  {((completed / total) * 100).toFixed(0)}%
+                </Text>
+                <Text ta="center" fz="xs" c="dimmed">
+                  Payed off
+                </Text>
+              </div>
+            }
+          />
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+function MultipleExpenses() {
+  const numberOfExpenses = 20;
+
+  return (
+    <div className="expensesMainContainer">
+      {Array.from({ length: numberOfExpenses }).map((_, index) => (
+        <div className="specificExpence"> dede </div>
+      ))}
+    </div>
+  );
+}
+
+function MultipleAssets() {
+  const numberOfAssets = 20;
+
+  return (
+    <div className="expensesMainContainer">
+      {Array.from({ length: numberOfAssets }).map((_, index) => (
+        <div className="specificExpence"> dede </div>
+      ))}
+    </div>
+  );
+}
+
+function MarkOptimization() {
+  return (
+    <LineChart
+      xAxis={[{ data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }]}
+      series={[
+        {
+          data: [2, 3, 5.5, 8.5, 1.5, 5, 1, 4, 3, 8],
+          //showMark: ({ index }) => index % 2 === 0,
+        },
+      ]}
+      width={500}
+      height={300}
+    />
+  );
+}
+
+
 function Contact() {
   return (
     <div className="main">
+      <div className="mainTitle"></div>
       <div className="accounts">
         <StatsGrid />
       </div>
       <div className="otherInfo">
-        <div className="graphAndStuff"></div>
+        <div className="graphAndStuff">
+          <div className="graph">
+            <MarkOptimization />
+          </div>
+          <div className="lowerChartData">
+            <div className="assets">
+              <div className="expensesTitle">Assets</div>
+              <MultipleExpenses />
+            </div>
+            <div className="Expenses">
+              <div className="expensesTitle">Expenses</div>
+              <MultipleExpenses/>
+            </div>
+          </div>
+        </div>
         <div className="debts">
+          <div className="debtsTitle">Your Debts</div>
           <MultipleStatsRingCards />
         </div>
       </div>

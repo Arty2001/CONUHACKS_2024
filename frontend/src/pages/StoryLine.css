@@ -1,102 +1,186 @@
 .main {
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
   
 }
 
-.accounts{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
+.accounts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
 }
 .root {
-    padding: calc(var(--mantine-spacing-xl) * 1.5);
+  padding: calc(var(--mantine-spacing-xl) * 1.5);
 }
-  
+
 .value {
-font-size: rem(24px);
-font-weight: 700;
-line-height: 1;
+  font-size: rem(24px);
+  font-weight: 700;
+  line-height: 1;
 }
 
 .diff {
-line-height: 1;
-display: flex;
-align-items: center;
-font-size: small;
-font-weight: 500;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  font-size: small;
+  font-weight: 500;
 }
 
 .icon {
-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-3));
+  color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-3));
 }
 
 .title {
-font-weight: 700;
-text-transform: uppercase;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .compared {
-font-size: x-small;
+  font-size: x-small;
 }
 
 .card {
-background-color: var(--mantine-color-body);
+  background-color: var(--mantine-color-body);
+  padding-bottom: 20px;
+  margin: 10px;
 }
 
 .label {
-font-family:
-    Greycliff CF,
-    var(--mantine-font-family);
-font-weight: 700;
-line-height: 1;
+  font-family: Greycliff CF, var(--mantine-font-family);
+  font-weight: 700;
+  line-height: 1;
 }
 
 .lead {
-font-family:
-    Greycliff CF,
-    var(--mantine-font-family);
-font-weight: 700;
-font-size: rem(22px);
-line-height: 1;
+  font-family: Greycliff CF, var(--mantine-font-family);
+  font-weight: 700;
+  font-size: rem(22px);
+  line-height: 1;
 }
 
 .inner {
-display: flex;
+  display: flex;
 
-/* @media (max-width: $mantine-breakpoint-xs) {
+  /* @media (max-width: $mantine-breakpoint-xs) {
     flex-direction: column;
 } */
 }
 
-.ring {
-flex: 1;
-display: flex;
-justify-content: flex-end;
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
-/* @media (max-width: $mantine-breakpoint-xs) {
+.ring {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+
+  /* @media (max-width: $mantine-breakpoint-xs) {
     justify-content: center;
     margin-top: var(--mantine-spacing-md);
 } */
+}
 
+.otherInfo {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px; 
+  margin-left: 30px;
+  margin-right: 30px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: antiquewhite;
+}
+
+.graphAndStuff {
+  flex: 2;
+  height: 600px;
+}
+
+.debts {
+  flex: 0.75;
+  height: 600px;
+  overflow-y: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.debtsTitle {
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.graphAndStuff {
+  display: flex;
+  flex-direction: column;
+}
+
+.graph{
+    height: 400px;
+}
+
+.lowerChartData {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-self: center;
+  height: 200px;
+  overflow: hidden;
+  gap: 100px;
+}
+
+.assetsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.assets {
+  width: 400px;
+  overflow-y: auto;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  height: 300px;
 
 }
 
-.otherInfo{
-    display: flex;
-    padding: 0px 20px;
-    justify-content: space-between;
-
+.Expenses {
+  width: 400px;
+  height: 300px;
+  overflow-y: auto;
 }
 
-.graphAndStuff{
-    background-color: red;
-    flex:2
-    
+.expensesTitle {
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+
+  justify-content: center;
+  align-items: center;
 }
 
-.debts{
-    flex: 1
+.specificExpence{
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    margin-bottom: 7px;
 }
 
+.expensesMainContainer{
+    overflow-y: auto;
+}
