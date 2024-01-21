@@ -174,8 +174,8 @@ def calculate_invest_funds_with_debts(after_tax_income, leisure, expenses, rent)
     return(after_tax_income-(leisure+expenses+rent)*12)
 
 def inflation(amount):  #for expenses
-    new_amount=amount*random.uniform(0.0189,0.0389) #2.89% inflation
-    return(amount+new_amount)
+    new_amount=int(amount)*random.uniform(0.0189,0.0389) #2.89% inflation
+    return(int(amount)+new_amount)
 
 
 def remove_mortgage(debts):
@@ -308,40 +308,6 @@ def calculate_invest_funds(financial_goal,debts, after_tax_income, current_year)
             if(debt['type'] !='mortgage'):
                 debt['amount'] = (debt['interestRate'] + 1) * debt['amount']
         return (debts, leftover)
-debts = [
-        {
-            "id": 1,
-            "type": "student",
-            "interestRate": 0.005,
-            "amount": 120,
-        },
-        {
-            "id": 2,
-            "type": "mortgage",
-            "interestRate": 0.065,
-            "amount": 100000,
-            "years":20
-        },
-        {
-            "id": 3,
-            "type": "credit card",
-            "interestRate": 0,
-            "amount": 2000,
-        },
-        {
-            "id": 4,
-             "type": "car",
-             "interestRate": 0,
-            "amount": 3000,
-        },
-        {
-            "id": 5,
-            "type": "other",
-            "interestRate": 0,
-            "amount": 4000,
-        }
-    ]
-
 
 def contribution_calculation(financial_goal,leftover,oldFHSA,oldRRSP,oldTFSA,oldOpen,income,year):
     newFhsa=0
@@ -397,10 +363,15 @@ def inflated_expenses(expenses):
     newExpenses['Expenses'] = inflation(expenses['Expenses'])
     return newExpenses
 
-@backend_template.route('/createStory', methods=['GET'])
+@backend_template.route('/createStory', methods=['POST'])
 def complete():
-    input= json.loads(request)
+    input= request.json
     yearsJson=[]
+
+    for item in input['debts']:
+        item["amount"] = int(item["amount"])  # or int(item["amount"]) if amount is always an integer
+        item["interestRate"] = float(item["interestRate"])
+        item["years"] = int(item["years"])
 
 
     if input.get('financialGoal')=="R":
@@ -435,7 +406,7 @@ def complete():
         incomeAfterTaxes=compute_taxes(input.get('annualIncome'))
         incomeAfterExpenses=calculate_invest_funds_with_debts(incomeAfterTaxes,input.get('expenses')["leisureActivities"],input.get('expenses')["Expenses"],input.get('expenses')["Rent"])
         newDebts,incomeAfterDebt=calculate_invest_funds(input.get('financialGoal'),input.get('debts'),incomeAfterExpenses,0)
-        newAccounts =contribution_calculation("R",incomeAfterDebt,input.get('investments')["FHSA"],input.get('investments')["RRSP"],input.get('investments')["TFSA"],input.get('investments')["OPEN"],incomeAfterDebt,0)
+        newAccounts =contribution_calculation("PD",incomeAfterDebt,input.get('investments')["FHSA"],input.get('investments')["RRSP"],input.get('investments')["TFSA"],input.get('investments')["OPEN"],incomeAfterDebt,0)
         assets=inflated_assets(input.get('assets'))
         expenses=inflated_expenses(input.get('expenses'))
         increase_income=income_increase(input.get('annualIncome'))
@@ -449,7 +420,7 @@ def complete():
             incomeAfterTaxes=compute_taxes(yearsJson[year-1]['income'])
             incomeAfterExpenses=calculate_invest_funds_with_debts(incomeAfterTaxes,yearsJson[year-1]['expenses']["leisureActivities"],yearsJson[year-1]['expenses']["Expenses"],yearsJson[year-1]['expenses']["Rent"])
             newDebts,incomeAfterDebt=calculate_invest_funds(input.get('financialGoal'),yearsJson[year-1]["debts"],incomeAfterExpenses,year)
-            newAccounts =contribution_calculation("R",incomeAfterDebt,yearsJson[year-1]['investments']["FHSA"],yearsJson[year-1]['investments']["RRSP"],yearsJson[year-1]['investments']["TFSA"],yearsJson[year-1]['investments']["OPEN"],incomeAfterDebt,year)
+            newAccounts =contribution_calculation("PD",incomeAfterDebt,yearsJson[year-1]['investments']["FHSA"],yearsJson[year-1]['investments']["RRSP"],yearsJson[year-1]['investments']["TFSA"],yearsJson[year-1]['investments']["OPEN"],incomeAfterDebt,year)
             assets=inflated_assets(yearsJson[year-1]['assets'])
             expenses=inflated_expenses(yearsJson[year-1]['expenses'])
             increase_income=income_increase(yearsJson[year-1]['income'])
@@ -463,7 +434,7 @@ def complete():
         incomeAfterTaxes=compute_taxes(input.get('annualIncome'))
         incomeAfterExpenses=calculate_invest_funds_with_debts(incomeAfterTaxes,input.get('expenses')["leisureActivities"],input.get('expenses')["Expenses"],input.get('expenses')["Rent"])
         newDebts,incomeAfterDebt=calculate_invest_funds(input.get('financialGoal'),input.get('debts'),incomeAfterExpenses,0)
-        newAccounts =contribution_calculation("R",incomeAfterDebt,input.get('investments')["FHSA"],input.get('investments')["RRSP"],input.get('investments')["TFSA"],input.get('investments')["OPEN"],incomeAfterDebt,0)
+        newAccounts =contribution_calculation("I",incomeAfterDebt,input.get('investments')["FHSA"],input.get('investments')["RRSP"],input.get('investments')["TFSA"],input.get('investments')["OPEN"],incomeAfterDebt,0)
         assets=inflated_assets(input.get('assets'))
         expenses=inflated_expenses(input.get('expenses'))
         increase_income=income_increase(input.get('annualIncome'))
@@ -477,7 +448,7 @@ def complete():
             incomeAfterTaxes=compute_taxes(yearsJson[year-1]['income'])
             incomeAfterExpenses=calculate_invest_funds_with_debts(incomeAfterTaxes,yearsJson[year-1]['expenses']["leisureActivities"],yearsJson[year-1]['expenses']["Expenses"],yearsJson[year-1]['expenses']["Rent"])
             newDebts,incomeAfterDebt=calculate_invest_funds(input.get('financialGoal'),yearsJson[year-1]["debts"],incomeAfterExpenses,year)
-            newAccounts =contribution_calculation("R",incomeAfterDebt,yearsJson[year-1]['investments']["FHSA"],yearsJson[year-1]['investments']["RRSP"],yearsJson[year-1]['investments']["TFSA"],yearsJson[year-1]['investments']["OPEN"],incomeAfterDebt,year)
+            newAccounts =contribution_calculation("I",incomeAfterDebt,yearsJson[year-1]['investments']["FHSA"],yearsJson[year-1]['investments']["RRSP"],yearsJson[year-1]['investments']["TFSA"],yearsJson[year-1]['investments']["OPEN"],incomeAfterDebt,year)
             assets=inflated_assets(yearsJson[year-1]['assets'])
             expenses=inflated_expenses(yearsJson[year-1]['expenses'])
             increase_income=income_increase(yearsJson[year-1]['income'])
@@ -489,7 +460,7 @@ def complete():
         incomeAfterTaxes=compute_taxes(input.get('annualIncome'))
         incomeAfterExpenses=calculate_invest_funds_with_debts(incomeAfterTaxes,input.get('expenses')["leisureActivities"],input.get('expenses')["Expenses"],input.get('expenses')["Rent"])
         newDebts,incomeAfterDebt=calculate_invest_funds(input.get('financialGoal'),input.get('debts'),incomeAfterExpenses,0)
-        newAccounts =contribution_calculation("R",incomeAfterDebt,input.get('investments')["FHSA"],input.get('investments')["RRSP"],input.get('investments')["TFSA"],input.get('investments')["OPEN"],incomeAfterDebt,0)
+        newAccounts =contribution_calculation("H",incomeAfterDebt,input.get('investments')["FHSA"],input.get('investments')["RRSP"],input.get('investments')["TFSA"],input.get('investments')["OPEN"],incomeAfterDebt,0)
         assets=inflated_assets(input.get('assets'))
         expenses=inflated_expenses(input.get('expenses'))
         increase_income=income_increase(input.get('annualIncome'))
@@ -505,7 +476,7 @@ def complete():
             incomeAfterTaxes=compute_taxes(yearsJson[year-1]['income'])
             incomeAfterExpenses=calculate_invest_funds_with_debts(incomeAfterTaxes,yearsJson[year-1]['expenses']["leisureActivities"],yearsJson[year-1]['expenses']["Expenses"],yearsJson[year-1]['expenses']["Rent"])
             newDebts,incomeAfterDebt=calculate_invest_funds(input.get('financialGoal'),yearsJson[year-1]["debts"],incomeAfterExpenses,year)
-            newAccounts =contribution_calculation("R",incomeAfterDebt,yearsJson[year-1]['investments']["FHSA"],yearsJson[year-1]['investments']["RRSP"],yearsJson[year-1]['investments']["TFSA"],yearsJson[year-1]['investments']["OPEN"],incomeAfterDebt,year)
+            newAccounts =contribution_calculation("H",incomeAfterDebt,yearsJson[year-1]['investments']["FHSA"],yearsJson[year-1]['investments']["RRSP"],yearsJson[year-1]['investments']["TFSA"],yearsJson[year-1]['investments']["OPEN"],incomeAfterDebt,year)
             assets=inflated_assets(yearsJson[year-1]['assets'])
             expenses=inflated_expenses(yearsJson[year-1]['expenses'])
             increase_income=income_increase(yearsJson[year-1]['income'])
@@ -516,48 +487,6 @@ def complete():
             year+=1
     input['years'] = yearsJson
     return jsonify(input)
-
-
-request= """ {
-    "name": "Rehean",
-    "age": 20,
-    "annualIncome": 100000,
-    "financialGoal": "H",
-    "houseValue": 1000000,
-    "debts": [
-        {
-            "id":1,
-            "type": "student",
-            "amount": 200000,
-            "interestRate": 0.07,
-            "years":0
-        },
-        {
-            "id":2,
-            "type": "mortgage",
-            "amount": 0,
-            "interestRate": 0.0676,
-            "years":25
-        }
-    ],
-    "assets": [{
-        "name": "Test",
-        "value": 1000
-    }],
-
-    "expenses": {
-        "Rent": 30,
-        "leisureActivities": 40,
-        "Expenses": 0
-    },
-    "investments": {
-        "FHSA": 0,
-        "TFSA": 0,
-        "RRSP": 0,
-        "OPEN": 0
-    }
-}
-"""
 
 # print(complete(request))
 

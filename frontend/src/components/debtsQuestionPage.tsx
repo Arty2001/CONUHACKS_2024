@@ -15,7 +15,8 @@ import React, { useEffect, useState } from "react";
 import { IconCurrencyDollar } from "@tabler/icons-react";
 
 interface DebtsQuestionPageProps {
-  page: number;
+  debts: any;
+  setDebts: any;
 }
 
 const containerStyle = {
@@ -48,14 +49,12 @@ const flexContainer = {
   gap: 5,
 };
 
-function DebtsQuestionPage() {
-  const [debts, setDebts] = useState([
-    { type: "Student", amount: 100000, interest: 0.75 },
-  ]);
+function DebtsQuestionPage({debts, setDebts}:DebtsQuestionPageProps) {
   const [type, setType] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number>(0);
+  const [years, setYears] = useState<number>(0);
   const [customType, setCustomType] = useState("");
-  const [interestRate, setInterestRate] = useState(0.06);
+  const [interestRate, setInterestRate] = useState<number>(0.06);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -83,7 +82,7 @@ function DebtsQuestionPage() {
         >
           <MenuItem value="" disabled> --Select-- </MenuItem>
           <MenuItem value={'Student'}> Student </MenuItem>
-          <MenuItem value={'Mortgage'}> Mortgage </MenuItem>
+          <MenuItem value={'mortgage'}> Mortgage </MenuItem>
           <MenuItem value={'Car Payments'}> Car Payments</MenuItem>
           <MenuItem value={'Others'}> Other </MenuItem> 
         </Select>
@@ -116,13 +115,19 @@ function DebtsQuestionPage() {
             inputProps={{ type: "number" }}
             defaultValue={interestRate}
             style={{ width: '300px'  }}
-            onChange={(event: any) => setAmount(event.currentTarget.value)}
+            onChange={(event: any) => setInterestRate(event.currentTarget.value)}
           />
+          <TextField
+            inputProps={{ type: "number" }}
+            defaultValue={years}
+            style={{ width: '300px'  }}
+            onChange={(event: any) => setYears(event.currentTarget.value)}
+          /> 
           <Button
             onClick={() => {
               setDebts([
                 ...debts,
-                { type: type, amount: amount, interest: interestRate },
+                { id: debts.length ,type: type, amount: amount, interestRate: interestRate as number , years: years},
               ]);
               handleClose()
             }}
@@ -137,7 +142,7 @@ function DebtsQuestionPage() {
       </div>
       <div style={{maxHeight: '240px', overflowY: 'scroll', scrollbarWidth: 'thin'}}>
       <div style={{ display: "flex", gap: 15, width: '400', flexDirection: 'column'}}>
-        {debts.map((debt, index) => (
+        {debts.map((debt:any, index:number) => (
           <Card sx={{ maxWidth: 345 }}>
             <Typography gutterBottom variant="h5" component="div">
               Debt {index}

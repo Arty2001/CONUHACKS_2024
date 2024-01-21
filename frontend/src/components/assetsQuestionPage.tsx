@@ -14,8 +14,9 @@ import {
   import React, { useEffect, useState } from "react";
   import { IconCurrencyDollar } from "@tabler/icons-react";
   
-  interface DebtsQuestionPageProps {
-    page: number;
+  interface assetsQuestionPageProps {
+    assets: any;
+    setAssets:any;
   }
   
   const containerStyle = {
@@ -48,10 +49,7 @@ import {
     gap: 5,
   };
   
-  function AssetsQuestionPage() {
-    const [Assets, setAssets] = useState([
-      { type: "house", amount: 100000},
-    ]);
+  function AssetsQuestionPage({assets,setAssets}:assetsQuestionPageProps) {
     const [type, setType] = useState("");
     const [amount, setAmount] = useState(0);
     const [customType, setCustomType] = useState("");
@@ -103,8 +101,8 @@ import {
             <Button
               onClick={() => {
                 setAssets([
-                  ...Assets,
-                  { type: customType, amount: amount},
+                  ...assets,
+                  { name: customType, value: amount as number},
                 ]);
                 handleClose()
               }}
@@ -119,7 +117,7 @@ import {
         </div>
         <div style={{maxHeight: '240px', overflowY: 'scroll', scrollbarWidth: 'thin'}}>
         <div style={{ display: "flex", gap: 15, width: '400', flexDirection: 'column'}}>
-          {Assets.map((asset, index) => (
+          {assets.map((asset:any, index:number) => (
             <Card sx={{ maxWidth: 345 }}>
               <Typography gutterBottom variant="h5" component="div">
                 Asset {index}
@@ -127,11 +125,11 @@ import {
               <div style={{ display: "flex"}}>
                 <Typography gutterBottom variant="h6" component="div">
                   {" "}
-                  Type: {asset.type}{" "}
+                  Type: {asset.name}{" "}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="div">
                   {" "}
-                  Amount: {asset.amount}{" "}
+                  Amount: {asset.value}{" "}
                 </Typography>
               </div>
             </Card>

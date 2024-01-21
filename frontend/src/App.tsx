@@ -17,7 +17,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/storyline" element={<StoryLine />} />
       </Routes>
     </Router>
     </MantineProvider>

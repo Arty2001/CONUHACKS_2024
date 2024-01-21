@@ -45,7 +45,6 @@ function StatsGrid(props:any) {
     const startPrice = props.response.years[props.range[0]]['investments'][key]
     const endPrice = props.response.years[props.range[1]]['investments'][key]
     const diff = (endPrice - startPrice)
-    debugger;
 
     const DiffIcon = diff > 0 ? IconArrowUpRight : IconArrowDownRight;
     stats.push(
@@ -111,7 +110,7 @@ export function StatsRingCard(props:any) {
             label={
               <div>
                 <Text ta="center" fz="lg" className="label">
-                  {((completed / total) * 100).toFixed(0)}%
+                  {(props.type==="mortgage" ? (props.year / props.years) * 100 : (props.amount/props.response.debts.find((obj:any) => obj.id === props.id).amount) *100).toFixed(0)}%
                 </Text>
                 <Text ta="center" fz="xs" c="dimmed">
                   Payed off
@@ -285,203 +284,13 @@ function MarkOptimization(props:any) {
   );
 }
 
-
-function Contact() {
-  const response = {
-    "age": 20,
-    "annualIncome": 100000,
-    "assets": [
-        {
-            "name": "Test",
-            "value": 1000
-        }
-    ],
-    "debts": [
-        {
-            "amount": 200000,
-            "id": 1,
-            "interestRate": 0.07,
-            "type": "student",
-            "years": 0
-        },
-        {
-            "amount": 0,
-            "id": 2,
-            "interestRate": 0.0676,
-            "type": "mortgage",
-            "years": 25
-        }
-    ],
-    "expenses": {
-        "Expenses": 0,
-        "Rent": 30,
-        "leisureActivities": 40
-    },
-    "financialGoal": "H",
-    "houseValue": 1000000,
-    "investments": {
-        "FHSA": 0,
-        "OPEN": 0,
-        "RRSP": 0,
-        "TFSA": 0
-    },
-    "name": "Rehean",
-    "years": [
-        {
-            "assets": [
-                {
-                    "name": "Test",
-                    "value": 1022.1783711569219
-                }
-            ],
-            "debts": [
-                {
-                    "amount": 50,
-                    "id": 2,
-                    "interestRate": 0.0676,
-                    "type": "mortgage",
-                    "years": 25
-                }
-            ],
-            "expenses": {
-                "Expenses": 0.0,
-                "Rent": 31.014592627149867,
-                "leisureActivities": 41.170691463439525
-            },
-            "house": 1025623.375390044,
-            "income": 102462.34656934025,
-            "investments": {
-                "FHSA": 0,
-                "OPEN": 0,
-                "RRSP": 0,
-                "TFSA": 0
-            }
-        },
-        {
-            "assets": [
-                {
-                    "name": "Test",
-                    "value": 1057.8085733615947
-                }
-            ],
-            "debts": [
-                {
-                    "amount": 0,
-                    "id": 2,
-                    "interestRate": 0.0676,
-                    "type": "mortgage",
-                    "years": 25
-                }
-            ],
-            "expenses": {
-                "Expenses": 0.0,
-                "Rent": 31.669286360224522,
-                "leisureActivities": 42.751414046290684
-            },
-            "house": 1056459.9882390646,
-            "income": 105076.77334956858,
-            "investments": {
-                "FHSA": 0,
-                "OPEN": 58659.2072702301,
-                "RRSP": 0,
-                "TFSA": 7666.666666666667
-            }
-        },
-        {
-            "assets": [
-                {
-                    "name": "Test",
-                    "value": 1090.333167958625
-                }
-            ],
-            "debts": [
-                {
-                    "amount": 0,
-                    "id": 2,
-                    "interestRate": 0.0676,
-                    "type": "mortgage",
-                    "years": 25
-                }
-            ],
-            "expenses": {
-                "Expenses": 0.0,
-                "Rent": 32.27296352707477,
-                "leisureActivities": 43.937295211045615
-            },
-            "house": 1095912.2586545597,
-            "income": 106814.04429576869,
-            "investments": {
-                "FHSA": 0,
-                "OPEN": 118575.92974102915,
-                "RRSP": 0,
-                "TFSA": 15500.0
-            }
-        },
-        {
-            "assets": [
-                {
-                    "name": "Test",
-                    "value": 1130.4429909089183
-                }
-            ],
-            "debts": [
-                {
-                    "amount": 0,
-                    "id": 2,
-                    "interestRate": 0.0676,
-                    "type": "mortgage",
-                    "years": 25
-                }
-            ],
-            "expenses": {
-                "Expenses": 0.0,
-                "Rent": 33.4173017790172,
-                "leisureActivities": 44.85302661323637
-            },
-            "house": 1137112.5278346364,
-            "income": 108535.06669776767,
-            "investments": {
-                "FHSA": 0,
-                "OPEN": 179263.35878405604,
-                "RRSP": 0,
-                "TFSA": 23500.0
-            }
-        },
-        {
-            "assets": [
-                {
-                    "name": "Test",
-                    "value": 1165.6365877019007
-                }
-            ],
-            "debts": [
-                {
-                    "amount": 0,
-                    "id": 2,
-                    "interestRate": 0.0676,
-                    "type": "mortgage",
-                    "years": 25
-                }
-            ],
-            "expenses": {
-                "Expenses": 0.0,
-                "Rent": 34.23688742485233,
-                "leisureActivities": 45.70912478339792
-            },
-            "house": 1170198.43877786,
-            "income": 110274.08236101696,
-            "investments": {
-                "FHSA": 0,
-                "OPEN": 240619.91152556616,
-                "RRSP": 0,
-                "TFSA": 31666.666666666668
-            }
-        }
-    ]
+interface ContactProps{
+  response: any,
 }
+
+
+function Contact({response}: ContactProps) {
   const [range, setRange] = React.useState<number[]>([0, response['years'].length-1]);
-
-
 
 
   const handleChange = (event: Event, newValue: number | number[]) => {
