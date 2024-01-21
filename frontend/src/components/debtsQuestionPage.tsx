@@ -78,7 +78,7 @@ function DebtsQuestionPage() {
           id="demo-simple-select"
           value={type}
           label="Financial Goal"
-          style={{ width: '300px'  }}
+          style={{ width: '300px', backgroundColor: 'rgb(227, 246, 230)' }}
           onChange={(event:any) => setType(event.target.value as string)}
         >
           <MenuItem value="" disabled> --Select-- </MenuItem>

@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import QuestionPage from '../components/QuestionPage';
 import DebtsQuestionPage from '../components/debtsQuestionPage';
+import AssetsQuestionPage from '../components/assetsQuestionPage';
 import { IconCurrencyDollar } from '@tabler/icons-react';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Typography, useTheme, MenuItem, Select, TextField, Button, Checkbox, FormControlLabel, InputBase, InputLabel } from '@mui/material';
@@ -176,7 +177,7 @@ function Home() {
             value={financialGoal}
             label="Financial Goal"
             onChange={(event: any) => setfinancialGoal(event.target.value as string)}
-            style={{ margin: '8px 0px', width: '310px', color: '#fff'}}
+            style={{ margin: '8px 0px', width: '310px', backgroundColor: 'rgb(227, 246, 230)' }}
 
           >
             <MenuItem value={'--Select--'}>--Select--</MenuItem>
@@ -187,15 +188,17 @@ function Home() {
           </Select>
           {financialGoal === 'Get My Dream House' &&
             <div>
-              <InputLabel htmlFor="bootstrap-input">
-                House
-              </InputLabel>
+              <div style={{textAlign:'left', width:'100%'}}>
+                  <InputLabel htmlFor="bootstrap-input">
+                    House Price
+                  </InputLabel>
+                </div>
               <BootstrapInput
-              fullWidth
-              defaultValue={name}
-              onBlur={(event) => setHouseValue(event.currentTarget.value)}
-              style={{ margin: '8px 0px'}} />
-            </div>}
+                fullWidth
+                defaultValue={name}
+                onBlur={(event) => setHouseValue(event.currentTarget.value)}
+                style={{ margin: '8px 0px'}} />
+            </div>
             
             }
         </div>
@@ -215,7 +218,7 @@ function Home() {
         initial={{ opacity: 0 , x: prevState ? -700: 700 }}
         animate={{ opacity: 1 , x: 0}}
         exit={{ opacity: 0 , x: prevState ? 700: -700}}><div style={{ boxShadow: " rgba(0, 0, 0, 0.04) 0px 0px 8px 0px, rgba(0, 0, 0, 0.02) 0px 0px 4px 0px, rgba(0, 0, 0, 0.04) 0px 0px 1px 1px", width: '350px', height: '375px', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop:'50px', padding: '20px', borderRadius: '10px' }}>
-          {/* <AssetsQuestionPage/> */}
+          <AssetsQuestionPage />
         </div></motion.div> }
       {page ===5 && <motion.div
       style={{position:'absolute', marginTop: 50}}
