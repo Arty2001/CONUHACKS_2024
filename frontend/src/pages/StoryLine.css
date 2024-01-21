@@ -1,0 +1,102 @@
+.main {
+  height: 100vh;
+  overflow: hidden;
+  
+}
+
+.accounts{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+.root {
+    padding: calc(var(--mantine-spacing-xl) * 1.5);
+}
+  
+.value {
+font-size: rem(24px);
+font-weight: 700;
+line-height: 1;
+}
+
+.diff {
+line-height: 1;
+display: flex;
+align-items: center;
+font-size: small;
+font-weight: 500;
+}
+
+.icon {
+color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-3));
+}
+
+.title {
+font-weight: 700;
+text-transform: uppercase;
+}
+
+.compared {
+font-size: x-small;
+}
+
+.card {
+background-color: var(--mantine-color-body);
+}
+
+.label {
+font-family:
+    Greycliff CF,
+    var(--mantine-font-family);
+font-weight: 700;
+line-height: 1;
+}
+
+.lead {
+font-family:
+    Greycliff CF,
+    var(--mantine-font-family);
+font-weight: 700;
+font-size: rem(22px);
+line-height: 1;
+}
+
+.inner {
+display: flex;
+
+/* @media (max-width: $mantine-breakpoint-xs) {
+    flex-direction: column;
+} */
+}
+
+.ring {
+flex: 1;
+display: flex;
+justify-content: flex-end;
+
+/* @media (max-width: $mantine-breakpoint-xs) {
+    justify-content: center;
+    margin-top: var(--mantine-spacing-md);
+} */
+
+
+}
+
+.otherInfo{
+    display: flex;
+    padding: 0px 20px;
+    justify-content: space-between;
+
+}
+
+.graphAndStuff{
+    background-color: red;
+    flex:2
+    
+}
+
+.debts{
+    flex: 1
+}
+
