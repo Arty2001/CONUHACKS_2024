@@ -1,3 +1,23 @@
+<b> Project Description </b>
+
+Empowering financial education, our web application for SunLife Clients elegantly combines personalized data inputs with intelligent algorithms, serving as a visionary guide through the labyrinth of personal finances, empowering users to proactively navigate inflation's impact and achieve unparalleled financial success. Our web application is not just a financial tool; it’s a financial companion. It offers foresight into the future, helping SunLife Clients prepare for the impact of inflation on their unique financial journeys. We believe that by empowering individuals with this knowledge, we’re not just addressing challenges, but we’re paving the way for financial resilience and success.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Flask MongoDB TypeScript Docker Template
 
 This template is tailored for upcoming hackathons and is available for projects where my direct involvement is not anticipated. To maintain confidentiality, please keep the template information between us. While NodeJS is often suggested as a default, Python, with its widely-known syntax and faster development cycle, offers a compelling alternative.
