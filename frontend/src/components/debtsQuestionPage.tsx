@@ -18,6 +18,14 @@ interface DebtsQuestionPageProps {
   page: number;
 }
 
+const containerStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100vh",
+};
+
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -30,16 +38,30 @@ const style = {
   p: 4,
 };
 
+const cardStyle = {
+  maxWidth: 345,
+  margin: "10px",
+};
+
+const flexContainer = {
+  display: "flex",
+  gap: 5,
+};
+
 function DebtsQuestionPage() {
   const [debts, setDebts] = useState([
     { type: "Student", amount: 100000, interest: 0.75 },
   ]);
-  const [type, setType] = useState("student");
+  const [type, setType] = useState("");
   const [amount, setAmount] = useState(0);
+  const [customType, setCustomType] = useState("");
   const [interestRate, setInterestRate] = useState(0.06);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setCustomType("--Select--");
+  }
 
   return (
     <div>
@@ -58,11 +80,22 @@ function DebtsQuestionPage() {
           label="Financial Goal"
           onChange={(event:any) => setType(event.target.value as string)}
         >
+          <MenuItem value="" disabled> --Select-- </MenuItem>
           <MenuItem value={'Student'}> Student </MenuItem>
           <MenuItem value={'Mortgage'}> Mortgage </MenuItem>
           <MenuItem value={'Car Payments'}> Car Payments</MenuItem>
           <MenuItem value={'Others'}> Other </MenuItem> 
         </Select>
+        {type === "Others" && (
+          <>
+          <InputLabel htmlFor="custom-type">Custom Type</InputLabel>
+              <TextField
+                id="custom-type"
+                value={customType}
+                onChange={(event) => setCustomType(event.target.value)}
+              />
+          </>
+        )}
           <InputLabel htmlFor="component-simple">Amount</InputLabel>
           <TextField
             inputProps={{ type: "number" }}
@@ -96,7 +129,7 @@ function DebtsQuestionPage() {
         </Box>
       </Modal>
       <div>
-        <div>My debts</div>
+        <h2>My debts</h2>
         <Button onClick={handleOpen}>Add Debt</Button>
       </div>
       <div style={{ display: "flex", gap: 5 }}>

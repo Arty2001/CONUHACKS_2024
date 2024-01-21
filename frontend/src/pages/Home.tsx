@@ -4,10 +4,11 @@ import QuestionPage from '../components/QuestionPage';
 import DebtsQuestionPage from '../components/debtsQuestionPage';
 import { IconCurrencyDollar } from '@tabler/icons-react';
 import InputAdornment from '@mui/material/InputAdornment';
-import { MenuItem, Select, TextField, Button, Checkbox, FormControlLabel } from '@mui/material';
+import { Typography, useTheme, MenuItem, Select, TextField, Button, Checkbox, FormControlLabel } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
 function Home() {
+  const theme = useTheme();
   const [page, setPage] = useState<number>(0);
   const [name, setName] = useState('');
   const [age, setAge] = useState<any>(0);
@@ -23,16 +24,41 @@ function Home() {
   const [TFSA , setTFSA] = useState<any>(0);
   const [RRSP , setRRSP] = useState<any>(0);
 
+  const containerStyles={
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    maxWidth: '1200px',
+    margin: 'auto',
+    flexDirection: theme.breakpoints.down('sm') ? 'column' : 'row',
+  };
+
+  const contentStyles = {
+    maxWidth: '500px',
+    textAlign: theme.breakpoints.down('sm') ? 'center' : 'left',
+  };
+  
   return (<>
     <div style={{margin: "auto", display:'flex', flexDirection:'column', width: '100%', height: '100vh', justifyContent: 'center', alignItems:'center'}}>
       {page !== 0 && <QuestionPage page={page}/>}
       <AnimatePresence>
-      {page ===0 && <div style={{color: 'white', backgroundColor: 'black', margin: "auto", display:'flex', flexDirection:'column', width: '100%', height: '100vh', justifyContent: 'center', alignItems:'center'}}>
-        <h2>Welcome to your financial journey! </h2>
-        <button onClick={()=>{setPage((prev)=>{return prev+1})}}> Starts</button>
+      {page ===0 && 
+      <div style={{color: 'white', backgroundColor: 'black', margin: "auto", display:'flex', flexDirection:'column', width: '100%', height: '100%', justifyContent: 'center', alignItems:'center'}}>
+        <div style={{ flex: 1, padding: '20px', border: '1px solid grey', borderRadius: '10px', margin: '10px'}}>
+          <Typography variant= "h6">Top Left Container</Typography>
+          <h2> Welcome to RAJA</h2>
+        </div>
+        <div style={{ flex: 1, padding: '20px', border: '1px solid grey', borderRadius: '10px', margin: '10px'}}>
+          <Typography variant= "h6">Bottom Left Container</Typography>
+          <h2> We are great</h2>
+        </div>
+        <div style={{ flex: 1, padding: '20px', border: '1px solid grey', borderRadius: '10px', margin: '10px' }}>
+              <Typography variant="h6">Right Container (Image)</Typography>
+              <img src= "file:///C:/Users/15145/Documents/CONUHACKS.png" alt="Your Image" style={{ width: '100%', height: '100%'}}/>
+        </div>
+        <button onClick={()=>{setPage((prev)=>{return prev+1})}}> Get Started</button>
       </div> }
-      <div style={{width:"100%", height:500}}>
-      {page ===1 && <div style={{ margin: 'auto', width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '60px', border: '1px solid grey', padding: '10px', borderRadius: '40px' }}>
+      {page ===1 && <div style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 1)", margin: 'auto', width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '60px', border: '1px solid black', padding: '10px', borderRadius: '40px' }}>
         <h2>Personal Information</h2>
         <TextField
           label={"Name"}
@@ -66,7 +92,7 @@ function Home() {
           <Button onClick={()=>{setPage((prev)=>{return prev+1})}}> Next</Button>
         </div>
      </div> }
-      {page ===2 && <div style={{ margin: 'auto', width: '30%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '60px', border: '1px solid grey', padding: '10px', borderRadius: '40px' }}>
+      {page ===2 && <div style={{margin: 'auto', width: '30%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '60px', border: '1px solid black', padding: '10px', borderRadius: '40px' }}>
       <h2>Financial Goal</h2>
         <Select
           labelId="demo-simple-select-label"
@@ -84,7 +110,9 @@ function Home() {
         {
           financialGoal === 'Get My Dream House' &&
           <TextField 
+          label= "Price of House"
           inputProps={{ type: 'number'}}
+          style={{ margin: '20px', width: '203px' }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -100,17 +128,19 @@ function Home() {
           <Button onClick={()=>{setPage((prev)=>{return prev-1})}}> Previous </Button>
           <Button onClick={()=>{setPage((prev)=>{return prev+1})}}> Next</Button>
         </div></div> }
-      {page ===3 && <div>
+      {page ===3 && <div style={{margin: 'auto', width: '900px', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '60px', border: '1px solid black', padding: '10px', borderRadius: '40px' }}>
         <DebtsQuestionPage/>
         <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
           <Button onClick={()=>{setPage((prev)=>{return prev-1})}}> Previous </Button>
           <Button onClick={()=>{setPage((prev)=>{return prev+1})}}> Next</Button>
         </div></div> }
-      {page ===4 && <div>
+      {page ===4 && <div style={{margin: 'auto', width: '40%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '60px', border: '1px solid black', padding: '10px', borderRadius: '40px' }} >
+      <h2>Expenses</h2>
         <FormControlLabel label = "I pay rent" control={<Checkbox
           checked={rentBoolean}
           onChange={(event: any) => setRentBoolean(event.target.checked)}/>}
         />
+        {rentBoolean && ( 
           <TextField 
           inputProps={{ type: 'number'}}
           disabled={!rentBoolean}
@@ -122,8 +152,11 @@ function Home() {
             ),
           }}
           defaultValue={rent}
+          label= "Rent"
           onChange={(event:any) => setRent(event.currentTarget.value)}
+          style={{ margin: '10px', width: '200px' }}
          />
+        )}
          <TextField 
           inputProps={{ type: 'number'}}
           InputProps={{
@@ -134,7 +167,9 @@ function Home() {
             ),
           }}
           defaultValue={activities}
+          label= "Activities"
           onChange={(event:any) => setActivities(event.currentTarget.value)}
+          style={{ margin: '10px', width: '200px' }}
          />
          <TextField 
           inputProps={{ type: 'number'}}
@@ -146,13 +181,19 @@ function Home() {
             ),
           }}
           defaultValue={expenses}
+          label= "Other Expenses"
           onChange={(event:any) => setExpenses(event.currentTarget.value)}
+          style={{ margin: '10px', width: '200px' }}
          />
         <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
           <Button onClick={()=>{setPage((prev)=>{return prev-1})}}> Previous </Button>
           <Button onClick={()=>{setPage((prev)=>{return prev+1})}}> Next</Button>
-        </div></div> }
-        {page ===5 && <div>
+        </div>
+        </div> 
+        }
+        {page ===5 && <div style={{margin: 'auto', width: '40%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '60px', border: '1px solid black', padding: '10px', borderRadius: '40px' }}>
+        <h2>Investments</h2>
+
           <TextField 
           inputProps={{ type: 'number'}}
           InputProps={{
@@ -163,7 +204,9 @@ function Home() {
             ),
           }}
           defaultValue={FHSA}
+          label= "FHSA"
           onChange={(event:any) => setFHSA(event.currentTarget.value)}
+          style={{ margin: '10px', width: '200px' }}
          />
          <TextField 
           inputProps={{ type: 'number'}}
@@ -175,7 +218,9 @@ function Home() {
             ),
           }}
           defaultValue={TFSA}
+          label= "TFSA"
           onChange={(event:any) => setTFSA(event.currentTarget.value)}
+          style={{ margin: '10px', width: '200px' }}
          />
          <TextField 
           inputProps={{ type: 'number'}}
@@ -187,14 +232,15 @@ function Home() {
             ),
           }}
           defaultValue={RRSP}
+          label= "RRSP"
           onChange={(event:any) => setRRSP(event.currentTarget.value)}
-         />
+          style={{ margin: '10px', width: '200px' }}
+        />
         <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
           <Button onClick={()=>{setPage((prev)=>{return prev-1})}}> Previous </Button>
           <Button > Create my Story </Button>
         </div></div> }
         
-      </div>
       </AnimatePresence>
     </div>
     </>
