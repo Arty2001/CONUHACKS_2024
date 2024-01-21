@@ -306,25 +306,57 @@ def calculate_invest_funds(financial_goal,debts, after_tax_income, current_year)
             for debt in new_debt:
                 if debt['id'] == highestRate['id']:
                     debt['amount'] = abs(leftover)
-                debt['amount'] = (debt['interestRate'] + 1) * debt['amount']
+                if(debt['type'] !='mortgage'):
+                    debt['amount'] = (debt['interestRate'] + 1) * debt['amount']
+            return( new_debt , 0)
+        elif leftover >= 0:
+            return ( [], leftover)
+    elif leftover>0:
+        debts_wo_mortgage= remove_mortgage(new_debt)
+        highestRate = maxRate(debts_wo_mortgage)
+        if (highestRate['interestRate']<0.06):
+            for debt in new_debt:
+                if(debt['type'] !='mortgage'):
+                    debt['amount'] = (debt['interestRate'] + 1) * debt['amount']
+            return (new_debt, leftover)
+        leftover = leftover - highestRate['amount']
+        new_debt = [debt for debt in new_debt if debt['id'] != highestRate['id']]
+        debts_wo_mortgage= remove_mortgage(new_debt)
+        while leftover > 0 and len(debts_wo_mortgage)>0 :
+            highestRate = maxRate(debts_wo_mortgage)
+            if (highestRate['interestRate']<0.06):
+                for debt in new_debt:
+                    if(debt['type'] !='mortgage'):
+                        debt['amount'] = (debt['interestRate'] + 1) * debt['amount']
+                return (new_debt, leftover)
+            leftover = leftover - highestRate['amount']
+            new_debt = [debt for debt in new_debt if debt['id'] != highestRate['id']]
+            debts_wo_mortgage= remove_mortgage(new_debt)
+        if leftover< 0:
+            for debt in new_debt:
+                if debt['id'] == highestRate['id']:
+                    debt['amount'] = abs(leftover)
+                if(debt['type'] !='mortgage'):
+                    debt['amount'] = (debt['interestRate'] + 1) * debt['amount']
             return( new_debt , 0)
         elif leftover >= 0:
             return ( [], leftover)
     else :
         for debt in debts:
-            debt['amount'] = (debt['interestRate'] + 1) * debt['amount']
+            if(debt['type'] !='mortgage'):
+                debt['amount'] = (debt['interestRate'] + 1) * debt['amount']
         return (debts, leftover)
 debts = [
         {
             "id": 1,
             "type": "student",
-            "interestRate": 0.05,
+            "interestRate": 0.07,
             "amount": 120,
         },
         {
             "id": 2,
             "type": "mortgage",
-            "interestRate": 6.5,
+            "interestRate": 0.065,
             "amount": 100000,
             "years":20
         },
@@ -348,17 +380,47 @@ debts = [
         }
     ]
 
-print(calculate_invest_funds("PD", debts, 1000,0 ))
+
+def contribution_calculation(financial_goal,leftover,oldFHSA,oldRRSP,oldTFSA,oldOpen,income,year):
+    newFhsa=0
+    newRRSP=0
+    newTFSA=0
+    newOpen=0
+
+    if financial_goal=="H":
+        if leftover<=8000:
+            newFhsa=8000
+        else:
+            leftover-=8000
+            newFhsa=8000
+            if leftover<=min(income*0.18,32490):
+                newRRSP=leftover
+            else:
+                leftover-=min(income*0.18,32490)
+                newRRSP=min(income*0.18,32490)
+                if leftover<= 7500 + year*500/3:
+                    newFhsa=leftover
+                else:
+                    leftover-=7500 +year*500/3
+                    newFhsa=7500 +year*500/3
+                    newOpen=leftover
 
 
-def debt_or_invest(debts,interest_rate):
-
-    for debt in debts:
-       if debt[]
 
 
-    return 
-    
+
+
+
+            return {"TFSA": oldTFSA+newTFSA, "RRSP":oldRRSP+newRRSP,"FHSA":oldFHSA+newFhsa,"Open":oldOpen+newOpen}
+
+
+
+
+
+print(calculate_invest_funds("", debts, 1000000,0 ))
+
+
+
 
 
 
