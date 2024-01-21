@@ -78,6 +78,7 @@ function DebtsQuestionPage() {
           id="demo-simple-select"
           value={type}
           label="Financial Goal"
+          style={{ width: '300px'  }}
           onChange={(event:any) => setType(event.target.value as string)}
         >
           <MenuItem value="" disabled> --Select-- </MenuItem>
@@ -99,6 +100,7 @@ function DebtsQuestionPage() {
           <InputLabel htmlFor="component-simple">Amount</InputLabel>
           <TextField
             inputProps={{ type: "number" }}
+            style={{ width: '300px'  }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -113,6 +115,7 @@ function DebtsQuestionPage() {
           <TextField
             inputProps={{ type: "number" }}
             defaultValue={interestRate}
+            style={{ width: '300px'  }}
             onChange={(event: any) => setAmount(event.currentTarget.value)}
           />
           <Button
@@ -124,21 +127,22 @@ function DebtsQuestionPage() {
               handleClose()
             }}
           >
-            Add
+          <h3>Add</h3>
           </Button>
         </Box>
       </Modal>
-      <div>
-        <h2>My debts</h2>
+      <div style={{textAlign: 'center', margin: 'auto'}}>
+        <h2 style={{fontFamily: 'FuturaPT, sans-serif', color:'black',fontWeight:'bold', fontSize: '20px',textAlign: 'center', lineHeight: 1.2, marginBottom: 10, padding: 10, borderBottom: '1px dotted gray'}}>My Debts</h2>
         <Button onClick={handleOpen}>Add Debt</Button>
       </div>
-      <div style={{ display: "flex", gap: 5 }}>
+      <div style={{maxHeight: '240px', overflowY: 'scroll', scrollbarWidth: 'thin'}}>
+      <div style={{ display: "flex", gap: 15, width: '400', flexDirection: 'column'}}>
         {debts.map((debt, index) => (
           <Card sx={{ maxWidth: 345 }}>
             <Typography gutterBottom variant="h5" component="div">
               Debt {index}
             </Typography>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex"}}>
               <Typography gutterBottom variant="h6" component="div">
                 {" "}
                 Type: {debt.type}{" "}
@@ -155,7 +159,8 @@ function DebtsQuestionPage() {
           </Card>
         ))}
       </div>
-    </div>
+      </div>
+      </div>
   );
 }
 export default DebtsQuestionPage;
