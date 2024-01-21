@@ -406,6 +406,15 @@ def contribution_calculation(financial_goal,leftover,oldFHSA,oldRRSP,oldTFSA,old
                     newOpen=leftover
 
 
+    if financial_goal=="I":
+        if leftover<= 7500 +year*500/3:
+            newFhsa=leftover
+        else:
+            leftover-=7500+year*500/3
+            newFhsa=7500+year*500/3
+            newOpen=leftover
+            
+           
 
 
 
