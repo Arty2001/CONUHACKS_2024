@@ -192,7 +192,7 @@ function MultipleExpenses(props:any) {
     <><section>
     <div> {key} </div>
     <span>..............................................................................................................................................................</span>
-    <div>  {props.response.years[props.range[1]]['expenses'][key]} </div>
+    <div>  {Math.round(props.response.years[props.range[1]]['expenses'][key]*100)/100} </div>
   </section></>
   ))
 
@@ -212,7 +212,7 @@ function MultipleAssets(props:any) {
         <><section>
         <div> {_.name} </div>
         <span>..............................................................................................................................................................</span>
-        <div>  ${_.value} </div>
+        <div>  {Math.round(_.value*100)/100} </div>
       </section>
       </>
       ))}
