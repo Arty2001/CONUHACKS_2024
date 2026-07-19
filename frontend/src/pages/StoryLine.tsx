@@ -85,13 +85,24 @@ const stats = [
 export function StatsRingCard(props:any) {
   const theme = useMantineTheme();
 
-  const rawPaidOff =
-    props.type === "mortgage"
-      ? (props.year / props.years) * 100
-      : (props.amount /
-          props.response.debts.find((obj: any) => obj.id === props.id).amount) *
-        100;
+  // props.amount is the balance still outstanding in the selected year, so the
+  // share actually retired is how far it has fallen below the opening balance —
+  // not the ratio between the two, which is the share still owed.
+  const isMortgage = props.type === "mortgage";
+  const openingBalance = props.response.debts.find(
+    (obj: any) => obj.id === props.id
+  )?.amount;
+
+  const rawPaidOff = isMortgage
+    ? (props.year / props.years) * 100
+    : openingBalance > 0
+    ? (1 - props.amount / openingBalance) * 100
+    : 0;
   const paidOff = Math.min(100, Math.max(0, rawPaidOff));
+
+  // Interest can outrun the payments, leaving a balance larger than the one it
+  // started at. That is 0% retired, not 100%.
+  const hasGrown = !isMortgage && openingBalance > 0 && props.amount > openingBalance;
 
   return (
     <Card withBorder p="sm" radius="md" className="card">
@@ -111,15 +122,15 @@ export function StatsRingCard(props:any) {
             thickness={4}
             size={100}
             sections={[
-              { value: paidOff, color: theme.primaryColor },
+              { value: paidOff, color: hasGrown ? "red" : theme.primaryColor },
             ]}
             label={
               <div>
-                <Text ta="center" fz="lg" className="label">
+                <Text ta="center" fz="lg" className="label" c={hasGrown ? "red" : undefined}>
                   {paidOff.toFixed(0)}%
                 </Text>
-                <Text ta="center" fz="xs" c="dimmed">
-                  Paid off
+                <Text ta="center" fz="xs" c={hasGrown ? "red" : "dimmed"}>
+                  {hasGrown ? "Balance grew" : "Paid off"}
                 </Text>
               </div>
             }
