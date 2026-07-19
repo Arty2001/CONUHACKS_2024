@@ -419,7 +419,7 @@ def complete():
         yearObject={"debts":newDebts,"assets":assets,"expenses":expenses,"investments":{"FHSA":newAccounts["FHSA"],"TFSA":newAccounts["TFSA"], "RRSP":0,"OPEN":newAccounts["OPEN"]}, 'income':increase_income}
         yearsJson.append(yearObject)
         year=1
-        while(len(yearsJson[-1]["debts"])!=0):
+        while(year < MAX_PROJECTION_YEARS and len(yearsJson[-1]["debts"])!=0):
             #print(yearsJson[year-1]['income'])
             #print('test',newRRSPAccount)
             incomeAfterTaxes=compute_taxes(yearsJson[year-1]['income'])
