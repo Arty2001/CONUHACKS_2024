@@ -309,10 +309,13 @@ def calculate_invest_funds(financial_goal,debts, after_tax_income, current_year)
                     valid_debts.append(debt)
             return ( valid_debts, leftover)
     else :
-        for debt in debts:
+        # Grow the copy, not the caller's list: every other branch returns
+        # new_debt, and mutating `debts` here aliased every projected year onto
+        # the same objects as the request's opening balances.
+        for debt in new_debt:
             if(debt['type'] !='mortgage'):
                 debt['amount'] = (debt['interestRate'] + 1) * debt['amount']
-        return (debts, leftover)
+        return (new_debt, leftover)
 
 def contribution_calculation(financial_goal,leftover,oldFHSA,oldRRSP,oldTFSA,oldOpen,income,year):
     newFhsa=0
