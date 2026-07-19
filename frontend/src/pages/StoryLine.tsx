@@ -84,8 +84,14 @@ const stats = [
 
 export function StatsRingCard(props:any) {
   const theme = useMantineTheme();
-  const completed = 1887;
-  const total = 2334;
+
+  const rawPaidOff =
+    props.type === "mortgage"
+      ? (props.year / props.years) * 100
+      : (props.amount /
+          props.response.debts.find((obj: any) => obj.id === props.id).amount) *
+        100;
+  const paidOff = Math.min(100, Math.max(0, rawPaidOff));
 
   return (
     <Card withBorder p="sm" radius="md" className="card">
@@ -105,15 +111,15 @@ export function StatsRingCard(props:any) {
             thickness={4}
             size={100}
             sections={[
-              { value: props.type==="mortgage" ? (props.year / props.years) * 100 : (props.amount/props.response.debts.find((obj:any) => obj.id === props.id).amount) *100 , color: theme.primaryColor },
+              { value: paidOff, color: theme.primaryColor },
             ]}
             label={
               <div>
                 <Text ta="center" fz="lg" className="label">
-                  {(props.type==="mortgage" ? (props.year / props.years) * 100 : (props.amount/props.response.debts.find((obj:any) => obj.id === props.id).amount) *100).toFixed(0)}%
+                  {paidOff.toFixed(0)}%
                 </Text>
                 <Text ta="center" fz="xs" c="dimmed">
-                  Payed off
+                  Paid off
                 </Text>
               </div>
             }
@@ -174,7 +180,7 @@ export function AssetsCard() {
                   {((completed / total) * 100).toFixed(0)}%
                 </Text>
                 <Text ta="center" fz="xs" c="dimmed">
-                  Payed off
+                  Paid off
                 </Text>
               </div>
             }
