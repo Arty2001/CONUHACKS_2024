@@ -13,6 +13,8 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-4.9-3178C6?logo=typescript&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-compose-2496ED?logo=docker&logoColor=white)
 
+<img src="docs/screenshot.png" alt="The projection view: a 25-year net-worth trajectory for the long-term investing goal, with TFSA and non-registered balances stacked under a rising total, per-account stat cards above the chart, and inflated assets, expenses and remaining debt below it.">
+
 </div>
 
 ---
@@ -29,6 +31,8 @@ A Python backend computes post-tax income under Canadian account rules and alloc
 2. The backend simulates year by year: taxes come off, expenses come off, debts get serviced and paid down, and whatever survives is allocated across FHSA / RRSP / TFSA / non-registered accounts according to your goal.
 3. The frontend charts the result — a stacked area chart of every account plus a running total, with a range slider to scrub across the projection window.
 
+<img src="docs/input-form.png" alt="The first questionnaire step: a progress bar across six stages above a Personal Information card collecting name, age and annual income.">
+
 The four goals change both the allocation strategy and the length of the projection:
 
 | Goal | Code | Strategy | Horizon |
@@ -37,6 +41,10 @@ The four goals change both the allocation strategy and the length of the project
 | Retirement | `R` | Maximize RRSP (deducted pre-tax), overflow into TFSA and non-registered | 25 years |
 | Long-term investing | `I` | Fill TFSA to the annual limit, overflow into non-registered | 25 years |
 | Pay down debt | `PD` | All surplus to debt, highest interest rate first | Runs until every non-mortgage debt is cleared |
+
+The horizon is visible in the chart itself. The same inputs under the house goal stop after a handful of years, as soon as savings overtake the 20% down payment on a house price that has been inflating the whole time:
+
+<img src="docs/goal-house.png" alt="The same projection view under the house goal, ending after eight years instead of twenty-five, with the FHSA stat card showing the balance built up against the down payment target.">
 
 ## The projection model
 
