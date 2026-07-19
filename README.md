@@ -99,6 +99,7 @@ This was built in a weekend and the modelling has rough edges worth naming:
 - Rates are sampled randomly per year rather than seeded, so **two identical requests return different curves**.
 - Investment growth is applied through the contribution waterfall rather than an explicit rate-of-return per account.
 - The `R` path can drive the TFSA balance negative when the RRSP pre-tax deduction leaves too little cash to cover expenses — the leftover is written to the account without a floor at zero.
+- Outside the `PD` goal the allocator only attacks debts above 6% interest, so a cheaper loan is never paid down at all — it just compounds for the whole projection. That is why the screenshots above show a car loan whose balance grows rather than shrinks.
 - Tax brackets are hardcoded to 2023 and Quebec only.
 - The `financial_computation()`, `expenses()`, and `long_term_investement()` functions in the same module are unfinished scratch from the hackathon and are not called by the endpoint.
 
