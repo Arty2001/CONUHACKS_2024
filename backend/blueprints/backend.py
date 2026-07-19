@@ -5,6 +5,11 @@ from flask import Blueprint, jsonify, request
 
 backend_template = Blueprint('backend', __name__)
 
+# Longest horizon any projection runs for. Goals that may never converge (e.g. a
+# house whose price inflates faster than savings accumulate) stop here and return
+# the projection as-is rather than looping forever.
+MAX_PROJECTION_YEARS = 25
+
 def financial_computation():
 
     user_data = {
@@ -388,7 +393,7 @@ def complete():
         yearsJson.append(yearObject)
 
         
-        for year in range(1,25):
+        for year in range(1,MAX_PROJECTION_YEARS):
             #print(yearsJson[year-1]['income'])
             newRRSPAccount,RRSPMax=rrsp(yearsJson[year-1]['investments']["RRSP"],yearsJson[year-1]['income'],RRSPMax)
             #print('test',newRRSPAccount)
@@ -442,7 +447,7 @@ def complete():
         yearObject={"debts":newDebts,"assets":assets,"expenses":expenses,"investments":{"FHSA":newAccounts["FHSA"],"TFSA":newAccounts["TFSA"], "RRSP":0,"OPEN":newAccounts["OPEN"]}, 'income':increase_income}
         yearsJson.append(yearObject)
      
-        for year in range(1,25):
+        for year in range(1,MAX_PROJECTION_YEARS):
             #print(yearsJson[year-1]['income'])
             #print('test',newRRSPAccount)
             incomeAfterTaxes=compute_taxes(yearsJson[year-1]['income'])
@@ -470,7 +475,7 @@ def complete():
         yearsJson.append(yearObject)
 
         year=1
-        while (yearsJson[year-1]['house']*0.2 > yearsJson[year-1]['investments']['FHSA']+yearsJson[year-1]['investments']['TFSA']+yearsJson[year-1]['investments']['RRSP']+yearsJson[year-1]['investments']['OPEN']) :
+        while (year < MAX_PROJECTION_YEARS and yearsJson[year-1]['house']*0.2 > yearsJson[year-1]['investments']['FHSA']+yearsJson[year-1]['investments']['TFSA']+yearsJson[year-1]['investments']['RRSP']+yearsJson[year-1]['investments']['OPEN']) :
             #print(yearsJson[year-1]['income'])
             #print('test',newRRSPAccount)
             incomeAfterTaxes=compute_taxes(yearsJson[year-1]['income'])
