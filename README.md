@@ -37,10 +37,12 @@ The four goals change both the allocation strategy and the length of the project
 
 | Goal | Code | Strategy | Horizon |
 |---|---|---|---|
-| Buy a house | `H` | Fill FHSA first, then RRSP, then remaining FHSA room | Runs until savings cover a 20% down payment on the inflation-adjusted house price |
+| Buy a house | `H` | Fill FHSA first, then RRSP, then remaining FHSA room | Runs until savings cover a 20% down payment on the inflation-adjusted house price, or 25 years, whichever comes first |
 | Retirement | `R` | Maximize RRSP (deducted pre-tax), overflow into TFSA and non-registered | 25 years |
 | Long-term investing | `I` | Fill TFSA to the annual limit, overflow into non-registered | 25 years |
-| Pay down debt | `PD` | All surplus to debt, highest interest rate first | Runs until every non-mortgage debt is cleared |
+| Pay down debt | `PD` | All surplus to debt, highest interest rate first | Runs until every non-mortgage debt is cleared, or 25 years, whichever comes first |
+
+Both open-ended goals stop at 25 years whether or not they got where they were going. A `PD` run on negative cashflow ends with the debt still outstanding, and an `H` run whose house price outruns the savings ends short of the down payment — in each case the projection is complete and simply shows the goal unmet.
 
 The horizon is visible in the chart itself. The same inputs under the house goal stop after a handful of years, as soon as savings overtake the 20% down payment on a house price that has been inflating the whole time:
 
