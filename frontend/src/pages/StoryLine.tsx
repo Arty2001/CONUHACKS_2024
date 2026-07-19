@@ -226,7 +226,7 @@ function MarkOptimization(props:any) {
   var TFSAValues =[]
   var RRSPValues=[]
   var OPENValues=[]
-  var FSHAValues = []
+  var FHSAValues = []
   for (var i = props.range[0]; i <= props.range[1]; i++) {
       xValues.push(i);
       var total=0
@@ -240,8 +240,8 @@ function MarkOptimization(props:any) {
         if (key === "OPEN"){
           OPENValues.push(props.response.years[i].investments[key])
         }
-        if (key === "FSHA"){
-          FSHAValues.push(props.response.years[i].investments[key])
+        if (key === "FHSA"){
+          FHSAValues.push(props.response.years[i].investments[key])
         }
         total+=props.response.years[i].investments[key]
       }
@@ -264,8 +264,8 @@ function MarkOptimization(props:any) {
           //showMark: ({ index }) => index % 2 === 0,
         },
         {
-          data: FSHAValues,
-          label: 'FSHA', area: true, showMark: false
+          data: FHSAValues,
+          label: 'FHSA', area: true, showMark: false
           //showMark: ({ index }) => index % 2 === 0,
         },
         {
